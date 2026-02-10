@@ -5,16 +5,28 @@ OUTPUT_DIR ?= $(CURDIR)/build-results
 
 build:
 	mkdir -p $(OUTPUT_DIR)
-	docker build \
-		--build-arg RELEASE=$(RELEASE) \
-		-f $(CURDIR)/Dockerfile.build \
-		-t ntp-builder-$(RELEASE) \
-		$(CURDIR)
 	docker run --rm \
+		-v $(CURDIR)/..:/build:ro \
 		-v $(OUTPUT_DIR):/output \
-		ntp-builder-$(RELEASE) \
-		bash -c "find /build -name '*.deb' -exec cp {} /output/ \\;"
-	@echo "Build complete. .deb files in $(OUTPUT_DIR)/"
+		debian:$(RELEASE) \
+		bash -c "\
+			apt-get update && \
+			apt-get install -y \
+				build-essential \
+				autogen \
+				debhelper \
+				dh-apparmor \
+				libcap2-dev \
+				libedit-dev \
+				libevent-dev \
+				libopts25-dev \
+				libssl-dev \
+				pkg-config \
+				pps-tools \
+				&& rm -rf /var/lib/apt/lists/* && \
+			cd /build && \
+			dpkg-buildpackage -us -uc && \
+			find /build -name '*.deb' -exec cp {} /output/ \\;"
 
 test:
 	$(MAKE) build RELEASE=$(RELEASE)
@@ -26,4 +38,3 @@ test:
 
 clean:
 	rm -rf $(OUTPUT_DIR)
-	docker rmi -f ntp-builder-$(RELEASE) 2>/dev/null || true
