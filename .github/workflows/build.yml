@@ -1,0 +1,60 @@
+name: Build NTP for Debian
+
+on:
+  push:
+    branches: [stable]
+  pull_request:
+    branches: [stable]
+
+jobs:
+  build-bookworm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build for Debian Bookworm
+      run: make build RELEASE=bookworm
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ntp-bookworm
+        path: docker/build-results/*.deb
+        retention-days: 7
+
+  build-trixie:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build for Debian Trixie
+      run: make build RELEASE=trixie
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ntp-trixie
+        path: docker/build-results/*.deb
+        retention-days: 7
+
+  test-bookworm:
+    runs-on: ubuntu-latest
+    needs: build-bookworm
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ntp-bookworm
+        path: docker/build-results
+    - name: Test installation in Bookworm
+      run: make test RELEASE=bookworm
+
+  test-trixie:
+    runs-on: ubuntu-latest
+    needs: build-trixie
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ntp-trixie
+        path: docker/build-results
+    - name: Test installation in Trixie
+      run: make test RELEASE=trixie
