@@ -11,22 +11,11 @@ build:
 		debian:$(RELEASE) \
 		bash -c "\
 			apt-get update && \
-			apt-get install -y \
-				build-essential \
-				autogen \
-				debhelper \
-				dh-apparmor \
-				libcap2-dev \
-				libedit-dev \
-				libevent-dev \
-				libopts25-dev \
-				libssl-dev \
-				pkg-config \
-				pps-tools \
-				&& rm -rf /var/lib/apt/lists/* && \
+			apt-get install -y build-essential && \
 			cd /build && \
+			apt-get build-dep -y . && \
 			dpkg-buildpackage -us -uc && \
-			find /build -name '*.deb' -exec cp {} /output/ \\;"
+			find . -name '*.deb' -exec mv {} /output/ \\;"
 
 test:
 	$(MAKE) build RELEASE=$(RELEASE)
