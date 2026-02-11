@@ -7,9 +7,10 @@ RUN apt-get update && \
         build-essential \
         git
 
-# VOLUME /build
-# VOLUME /output
-
 WORKDIR /tmp
 COPY debian/control debian/
 RUN apt-get build-dep -y .
+
+VOLUME /build
+VOLUME /output
+WORKDIR /build

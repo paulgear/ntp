@@ -13,12 +13,14 @@ buildcontainer:
 
 build:	buildcontainer
 	mkdir -p $(OUTPUT_DIR)
-	git archive --format=tar --output=ntp_$(VERSION)+dfsg.orig.tar.gz HEAD
-	docker run --rm \
-		-v $(CURDIR)/..:/build:ro \
+	cd ..; git archive --output=ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian' ':!docker' ':!.github'
+	docker run --rm -ti \
+		-v $(CURDIR)/../ntp_$(VERSION)+dfsg.orig.tar.gz:/build/ntp_$(VERSION)+dfsg.orig.tar.gz \
+		-v $(CURDIR)/debian:/build/ntp/debian \
 		-v $(OUTPUT_DIR):/output \
-		$(BUILD_CONTAINER) \
-		bash -c "dpkg-buildpackage -us -uc && find . -name '*.deb' -exec mv {} /output/ \\;"
+		$(BUILD_CONTAINER)
+# 		 \
+# 		bash -c "cd /build/ntp && dpkg-buildpackage -us -uc && find . -name '*.deb' -exec mv {} /output/ \\;"
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
 
