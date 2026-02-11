@@ -1,7 +1,5 @@
-openssl_libdir.patch
 dfsg.patch
 includes.patch
-openssl-disable-check.patch
 libedit.patch
 debian-locfile.patch
 sntp-kod-location.patch
