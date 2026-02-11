@@ -14,7 +14,7 @@ LDFLAGS  = $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 
 override_dh_auto_configure:
 ifeq (hurd, $(DEB_HOST_ARCH_OS))
-	# hurd does not provided the system calls needed for ntpd to work.
+	# hurd does not provide the system calls needed for ntpd to work.
 	exit 1
 endif
 	# This is necessary for the changes in sntp-kod-location.patch to
