@@ -5,6 +5,7 @@ FROM debian:${RELEASE}
 RUN apt-get update && \
     apt-get install -y \
         build-essential \
+        gbp \
         git
 
 WORKDIR /tmp
