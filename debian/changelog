@@ -1,4 +1,4 @@
-ntp (1:4.2.8p18+dfsg-1); urgency=medium
+ntp (1:4.2.8p18+dfsg-1) stable; urgency=medium
 
   * New upstream version 4.2.8p18+dfsg
   * Update for Debian bookworm & trixie compatibility
