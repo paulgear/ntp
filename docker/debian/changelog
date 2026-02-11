@@ -1,9 +1,9 @@
-ntp (1:4.2.8p18+dfsg-1) bookworm; urgency=medium
+ntp (1:4.2.8p18+dfsg-1); urgency=medium
 
   * New upstream version 4.2.8p18+dfsg
-  * Update for Debian bookworm compatibility
+  * Update for Debian bookworm & trixie compatibility
 
- -- Your Name <your.email@domain.com>  Tue, 10 Feb 2026 10:00:00 +0000
+ -- Paul Gear <github@libertysys.com.au>  Tue, 10 Feb 2026 10:00:00 +0000
 
 ntp (1:4.2.8p15+dfsg-1) unstable; urgency=medium
 
@@ -218,9 +218,9 @@ ntp (1:4.2.8p9+dfsg-1) unstable; urgency=medium
     - Fix CVE-2016-7429
     - Fix CVE-2016-7426
     - Fix CVE-2016-7433
-  * Update watch for new version specific URL. Patch from 
+  * Update watch for new version specific URL. Patch from
     Nicholas Luedtke <nicholas.luedtke@hpe.com> (Closes: #823269)
-  * Make ntpdate-debian use the DHCP servers. Patch from 
+  * Make ntpdate-debian use the DHCP servers. Patch from
     Christian Ehrhardt <christian.ehrhardt@canonical.com> (Closes: #617965)
   * Move dhcp temporary files from /var/lib to /run. (Closes: #600661)
   * Wait for ntp to die in the stop target. Patch from Christoph Biedl
@@ -609,7 +609,7 @@ ntp (1:4.2.4p6+dfsg-2) unstable; urgency=medium
 
   * Fixed typo in ntpdate man page (closes: #526086)
   * Updated standards version
-  * Moved .dhcp version of configuration files to /var/lib/ntp and 
+  * Moved .dhcp version of configuration files to /var/lib/ntp and
     /var/lib/ntpdate (closes: #524035)
   * Cleaned up man pages to satisfy lintian's hyphen-used-as-minus-sign
     complaint
@@ -629,7 +629,7 @@ ntp (1:4.2.4p6+dfsg-1) unstable; urgency=low
   * Switched build dependency from libcap-dev to libcap2-dev (closes: #474639)
   * Added -D_GNU_SOURCE to CPPFLAGS, to support glibc 2.8 (closes: #507806)
   * Recognize "adjust" in ntpdate logcheck rules (closes: #493907)
-  * Removed "dynamic" key word from default ntp.conf, because this is now 
+  * Removed "dynamic" key word from default ntp.conf, because this is now
     obsolete and the default
 
  -- Peter Eisentraut <petere@debian.org>  Wed, 18 Feb 2009 20:24:14 +0200
@@ -657,17 +657,17 @@ ntp (1:4.2.4p4+dfsg-6) unstable; urgency=low
   * Use libedit instead of libreadline, added libedit.patch (closes: #448408)
   * While updating autotools.patch, added description how it is generated
     (closes: #446756)
-  * Since the scripts summary and plot_summary are not installed in a binary 
-    package, drop their mention from the copyright file, thus deconfusing 
+  * Since the scripts summary and plot_summary are not installed in a binary
+    package, drop their mention from the copyright file, thus deconfusing
     lintian
-  * Avoid timeout message from ntpdate.if-up when ntpdate package was removed 
+  * Avoid timeout message from ntpdate.if-up when ntpdate package was removed
     but not purged (closes: #481049)
 
  -- Peter Eisentraut <petere@debian.org>  Mon, 16 Jun 2008 12:55:54 +0200
 
 ntp (1:4.2.4p4+dfsg-5) unstable; urgency=low
 
-  * Removed mentions of -d and -D options from ntpd man page, because the 
+  * Removed mentions of -d and -D options from ntpd man page, because the
     Debian package does not support these options (closes: #479015)
   * Ignore errors from ntpdate-debian call in ntpdate.if-up (closes: #478655)
 
@@ -678,11 +678,11 @@ ntp (1:4.2.4p4+dfsg-4) unstable; urgency=low
   * Small ntp.conf man page fix (patch by Justin Pryzby) (closes: #450721)
   * Removed incorrect mention of -m option on ntpd man page (closes: #468348)
   * Corrected doc-base section for ntp-doc
-  * Added build conflicts against libavahi-compat-libdnssd-dev, so that that 
+  * Added build conflicts against libavahi-compat-libdnssd-dev, so that that
     feature isn't accidentally enabled (closes: #462597)
-  * Added build conflicts against libwww-dev, libwww-ssl-dev, so we don't 
+  * Added build conflicts against libwww-dev, libwww-ssl-dev, so we don't
     accidentally link with their libmd5 (closes: #462597)
-  * Use lockfile-progs to ensure that only one ntpdate.ifup is running at a 
+  * Use lockfile-progs to ensure that only one ntpdate.ifup is running at a
     time (closes: #471358)
   * Also use lockfile-progs to ensure that ntpd does not start while
     ntpdate.ifup is running (closes: #436029)
@@ -720,7 +720,7 @@ ntp (1:4.2.4p4+dfsg-3) unstable; urgency=low
 
 ntp (1:4.2.4p4+dfsg-2) unstable; urgency=low
 
-  * Disable checking of openssl library version.  
+  * Disable checking of openssl library version.
     (Closes: #446710, #446711, #447431)
     Patch from Steve Langasek <vorlon@debian.org>
 
@@ -1378,7 +1378,7 @@ ntp (1:4.2.0-0.1) experimental; urgency=low
     - "ntptimeset" is disabled upstream (has compiler errors).
       . Closes: #139636
   * Debian packaging:
-    - Use separate subdirectories for building 
+    - Use separate subdirectories for building
       the -simple and -refclock server versions.
     - Added prerm scripts (debconf purge).
     - Switch to debhelper 4 compatibility.
@@ -1514,7 +1514,7 @@ ntp (1:4.1.0-5) unstable; urgency=medium
 
   * fix ntpdate postinst to not trash changes in /etc/default/ntp-servers,
     using patch from Petter Reinholdtsen <pere@hungry.com>, closes: #117162
-  * update package description to point everyone building a reference clock 
+  * update package description to point everyone building a reference clock
     to the ntp-refclock package, not just radio clock owners, closes: #126412
   * change ntp-simple.config and ntp-refclock.config so that dpkg-reconfigure
     works as expected
@@ -1526,11 +1526,11 @@ ntp (1:4.1.0-4) unstable; urgency=medium
   * update build dependencies, closes: #115089
   * apply patches for hurd-i386, closes: #115260
   * incorporate german templates, closes: #114830, #114831
-  * recraft debconf processing to preserve manual changes made to 
+  * recraft debconf processing to preserve manual changes made to
     /etc/default/ntp-servers, closes: #117162, #117607
-  * I can't reproduce the problem reported with dpkg-reconfigure after 
+  * I can't reproduce the problem reported with dpkg-reconfigure after
     updating the maintainer scripts, closes: #120634
-  * make ntpdate's init.d be silent if no NTP servers are configured, 
+  * make ntpdate's init.d be silent if no NTP servers are configured,
     closes: #113488, #37946, #79262, #117447
   * clean out /etc/cron.*/ntp files left from prior versions, closes: #117610
   * apply patch from Colm Buckley to address problem with broadcast NTP,
@@ -1550,9 +1550,9 @@ ntp (1:4.1.0-3) unstable; urgency=medium
 ntp (1:4.1.0-2) unstable; urgency=medium
 
   * add debconf support, borrowing lightly from the Progeny implementation,
-    and examples in other Debian packages.  The list of servers to be used by 
-    ntpd and ntpdate are now shared.  A side effect of debconf support is use 
-    of /etc/default/ntp-servers, which means /etc/init.d/ntpdate no longer 
+    and examples in other Debian packages.  The list of servers to be used by
+    ntpd and ntpdate are now shared.  A side effect of debconf support is use
+    of /etc/default/ntp-servers, which means /etc/init.d/ntpdate no longer
     needs to be modified by hand.  The admin may optionally do it all manually.
     closes: #34704, #36323, #37703, #52999, #57289, #57603, #66296
     closes: #66573, #67276, #83654, #86209
@@ -1563,7 +1563,7 @@ ntp (1:4.1.0-2) unstable; urgency=medium
   * ntp-simple and ntp-refclock made self-sufficient with respect to config
     files, and suggest ntp.  this allows a very small filesystem footprint
     if all you really want is a daemon.  most users are expected to pick the
-    ntp package, which depends on ntp-simple or ntp-refclock, with the 
+    ntp package, which depends on ntp-simple or ntp-refclock, with the
     combination providing the mix of clients and daemon older pre-split
     ntp packages provided.  closes: #110583
   * move to non-us since libssl-dev used for authentication, closes: #109127
@@ -1575,10 +1575,10 @@ ntp (1:4.1.0-1) unstable; urgency=medium
 
   * new upstream version, closes: #64951, #67562, #67744, #72321
   * split the package.  ntp now depends on either ntp-simple or ntp-refclock
-    to deliver the actual daemon.  The simple version uses minimal memory, 
-    the refclock version includes all the drivers for radio clocks.  
+    to deliver the actual daemon.  The simple version uses minimal memory,
+    the refclock version includes all the drivers for radio clocks.
     closes: #52903, #98484, #56991
-  * eliminate the xntp3 package, since it existed to smooth upgrades to 
+  * eliminate the xntp3 package, since it existed to smooth upgrades to
     potato, and should no longer be needed when woody releases
   * change perl5 suggestion to perl
   * add build dependency on libssl-dev for authentication support
@@ -1586,10 +1586,10 @@ ntp (1:4.1.0-1) unstable; urgency=medium
   * this version may build correctly on the hurd, not closing 90974 until
     confirmation is received, though.
   * config.* in this version seem fresh enough, closes: #95741
-  * upstream fixed various problems by not using threads on Linux, 
+  * upstream fixed various problems by not using threads on Linux,
     closes: #102403, #102115, #94617, #64744, #94102, #93131
   * disable debugging since to reduce log file spew, closes: #100347
-  * prerm is now entirely debhelper glue with appropriate sanity checks, 
+  * prerm is now entirely debhelper glue with appropriate sanity checks,
     closes: #63157
   * patch libntp/msyslog.c for possible buffer overflow, closes: #72965
   * fix typos in ntpd.1, closes: #75681, #81054
@@ -1597,7 +1597,7 @@ ntp (1:4.1.0-1) unstable; urgency=medium
   * make ntptrace report if specified host is not found, closes: #98152
   * remove cleanup code from ntp-doc postinst, since it can cause problems
     and hasn't been relevant since 1999.  Closes: #99035, #94366
-  * modify ntpdate init.d to run ntpdate on restart and force-reload too, 
+  * modify ntpdate init.d to run ntpdate on restart and force-reload too,
     closes: #75208, #55942
   * add -u to ntpdate init.d to use unpriveledged port, closes: #77329
   * move the ntpdate init.d invocation as early as possible in the boot
@@ -1612,7 +1612,7 @@ ntp (1:4.0.99g-3) unstable; urgency=high
   * apply patch from the NTP hackers list to fix buffer overflow with the
     potential for remote root exploits.  patch will cause the daemon to log
     attempted exploits.
-  * add an include of <time.h> to quickly get around the changes in time 
+  * add an include of <time.h> to quickly get around the changes in time
     header files with recent glibc's, back this out on the next upstream
     release?
 
@@ -1631,7 +1631,7 @@ ntp (1:4.0.99g-2) frozen unstable; urgency=low
 ntp (1:4.0.99g-1) frozen unstable; urgency=low
 
   * target frozen since the xntp3 thing is release-critical
-  * roll the epoch, since it is the cleanest way to have the xntp3 meta 
+  * roll the epoch, since it is the cleanest way to have the xntp3 meta
     package exist to help with the xntp3->ntp rename, closes: #59090
   * move to a fresher upstream snapshot to get various bug fixes, no changes
     to functionality we use, closes: #57659, #57816, #58400, #59154, #56551
@@ -1652,7 +1652,7 @@ ntp (4.0.99c-1) frozen unstable; urgency=low
   * include some information about hwclock in README.Debian, closes: #56755
   * pick up 4.0.99c upstream, since all the changes relevant to us appear to
     be documentation fixes, and they seem worth having.  Closes: #56598
-  * add a few touches to the rules file to keep the build process from 
+  * add a few touches to the rules file to keep the build process from
     running autoconf and friends out of timestamp confusion.
 
  -- Bdale Garbee <bdale@gag.com>  Fri,  4 Feb 2000 00:00:24 -0700
@@ -1708,9 +1708,9 @@ ntp (4.0.98k-1) unstable; urgency=low
   * while I'm messing with log rotation, modify cron.weekly to invert the
     nesting of the conditions.  This way, if there is no logfile definition
     in /etc/ntp.conf, and ntpd is therefore using syslog(), we won't kill and
-    restart the daemon to rotate the non-existent log file.  
+    restart the daemon to rotate the non-existent log file.
   * update configure-ntp to comment-out the logfile definition so that ntpd
-    will use syslog, and not require cycling weekly for log file rotation.  
+    will use syslog, and not require cycling weekly for log file rotation.
     This will cause ntpd logging to end up in daemon.log, since we do not have
     a LOG_NTP facility at this time, forcing ntpd to use LOG_DAEMON.  Wishlist
     bug filed against libc6-dev asking for a LOG_NTP.  Leave the cron.weekly
@@ -1761,17 +1761,17 @@ ntp (4.0.98f-1) unstable; urgency=low
 
   * new upstream source, closes: #49877
   * upstream maintainer uninterested in changing /tmp file usage, since there
-    is no clear problem with what is there, so no point in our keeping the 
+    is no clear problem with what is there, so no point in our keeping the
     bug open... closes: #26062
   * hardware clock handling is different in v4, and even more different if the
     nanosecond timing patches are in use in the kernel.  I think what ntp is
     doing now is correct.  closes: #12181
-  * I have never been able to reproduce the sigint failure during name 
+  * I have never been able to reproduce the sigint failure during name
     resolution reported ages ago, even when I worked hard to get slow name
     service.  I see no point in keeping the bug open.  closes: #18723
   * include ntpdate manpage from Fabrizio Polacco, closes: #50329
   * include ntpd manpage from Peter Breuer, closes: #50462
-  * quick hack to see if we can fix the ntptimeval lossage in glibc2.0, 
+  * quick hack to see if we can fix the ntptimeval lossage in glibc2.0,
     closes: 50433
 
  -- Bdale Garbee <bdale@gag.com>  Sat, 20 Nov 1999 23:51:34 -0700
@@ -1781,7 +1781,7 @@ ntp (4.0.98d-1) unstable; urgency=low
   * building ntptime again, closes: #43839
   * new upstream version, closes: #49102, #48944
   * fix dependencies for ntpdate so that upgrading from prior version works,
-    since ntptimeset appeared briefly in ntp before moving to ntpdate, 
+    since ntptimeset appeared briefly in ntp before moving to ntpdate,
     closes: #49275
   * fix paths in ntp-doc postinst symlink creation for FHS, closes: #47011
   * add text to init.d on restart, closes: #47048
@@ -1795,7 +1795,7 @@ ntp (4.0.98a-1) unstable; urgency=low
   * fix error in Debian-specific man page sources, closes: #43833
   * FHS compliance
   * put ntptimeset, a "new" alternative to ntpdate from CMU that just appeared
-    in the ntp upstream sources, into the ntpdate package. 
+    in the ntp upstream sources, into the ntpdate package.
   * minor tweaks to achieve a clean lintian report
   * remove text display from postinst to satisfy policy
 
@@ -1811,7 +1811,7 @@ ntp (4.0.97c-1) unstable; urgency=low
 
 ntp (4.0.97a-1) unstable; urgency=low
 
-  * new upstream version, 
+  * new upstream version,
     closes: #41724, #43024, #43025, #43026, #38074, #43202, #43446
 
  -- Bdale Garbee <bdale@gag.com>  Wed, 25 Aug 1999 21:02:12 -0600
@@ -1831,7 +1831,7 @@ ntp (4.0.92e-1) unstable; urgency=low
       kernel pll correctly recognized in 2.2 kernels, closes 32913
       memory leak believed fixed in this version, closes 33762
   * fix configure-ntp to make postinst text less confusing on initial install,
-    closes 35869.  
+    closes 35869.
   * eliminate duplicate daemon start on initial install in postinst
   * fix configure-ntp to create ntp.conf with the right log file, closes 35621
   * move ntp-doc symlink management from rules file to ntp-doc postinst and
@@ -1842,7 +1842,7 @@ ntp (4.0.92e-1) unstable; urgency=low
 
 ntp (4.0.91-3) unstable; urgency=low
 
-  * trivial tweaks to the init.d scripts for ntp and ntpdate to better 
+  * trivial tweaks to the init.d scripts for ntp and ntpdate to better
     conform with policy, closes 32869
 
  -- Bdale Garbee <bdale@gag.com>  Thu,  4 Feb 1999 23:16:35 -0700
@@ -1864,11 +1864,11 @@ ntp (4.0.91-1) unstable; urgency=low
   * enable more types of hardware clocks, closes 30989
   * create a "null" manpage for all the executables that directs users to the
     ntp-doc package
-  * reworked the init.d/ntp.conf/etc stuff significantly, closes 30574, 
+  * reworked the init.d/ntp.conf/etc stuff significantly, closes 30574,
   * add some text to the postinst for ntpdate, closes 21320
   * fix init.d messages to comply with standard, closes 29618, 23493, 23499,
     23517, 23518
-  * apply fix for insecure /tmp file usage in one debugging mode, which 
+  * apply fix for insecure /tmp file usage in one debugging mode, which
     would close 26062... but I'm going to forward it upstream and wait for
     a reply before closing it.
 
@@ -1881,7 +1881,7 @@ xntp3 (5.93-3) unstable; urgency=low
     ntpdate call in init.d, closes 22796
   * add patch to ntp_io.c to report exceeding max number of bindable interfaces
     in xntpd, closes 23145
-  * update postinst to be more graceful if no NTP servers are specified, 
+  * update postinst to be more graceful if no NTP servers are specified,
     closes 24268
   * update postrm to be more robust
 
@@ -1892,7 +1892,7 @@ xntp3 (5.93-2) frozen unstable; urgency=low
   * fix prerm to gracefully handle the case of a package remove or upgrade
     when the daemon is not running.  Closes bugs 23565, 22384.
   * push this into frozen since 23565 was quite rightly flagged as important,
-    and the 5.93 bits have been in unstable and working fine for over a month 
+    and the 5.93 bits have been in unstable and working fine for over a month
     with no version-specific bug reports.
 
  -- Bdale Garbee <bdale@gag.com>  Sun,  3 May 1998 21:14:29 -0600
@@ -1907,14 +1907,14 @@ xntp3 (5.93-1) unstable; urgency=low
 
 xntp3 (5.91-9) frozen unstable; urgency=low
 
-  * fix a conditional in postinst that fails with older versions of 
+  * fix a conditional in postinst that fails with older versions of
     shellutils, closes 21988
 
  -- Bdale Garbee <bdale@gag.com>  Sat,  2 May 1998 01:57:32 -0600
 
 xntp3 (5.91-8) frozen unstable; urgency=medium
 
-  * finish the changes to make /etc/init.d/xntp3 not be a 'conffile', 
+  * finish the changes to make /etc/init.d/xntp3 not be a 'conffile',
     closes 21117 and 21119.    /o\
   * clean up a few details in the pre and post scripts, making them a bit
     more paranoid and better equipped to handle unexpected conditions.
@@ -1976,7 +1976,7 @@ xntp3 (5.91-1) unstable; urgency=low
 xntp3 (5.90-12) unstable; urgency=low
 
   * update postinst and postrm to improve daemon handling.  Closes bug 15273
-  * modified rules file to indicate need for debhelper if dh_testdir fails 
+  * modified rules file to indicate need for debhelper if dh_testdir fails
 
  -- Bdale Garbee <bdale@gag.com>  Wed, 26 Nov 1997 22:47:00 -0700
 
@@ -2120,7 +2120,7 @@ xntp-3.4x-2:
 xntp-3.4x-1:
  950928 Andrew Howell <andrew@it.com.au>
  * Updated to the newest version.
- * Made cronjob quiet. 
+ * Made cronjob quiet.
  * Postinst script will now run xntpd if you supply a NTP server.
 
 xntp-3.4s-0:
