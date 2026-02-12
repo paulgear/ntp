@@ -4,8 +4,8 @@ DEBIAN_RELEASE ?= bookworm
 VERSION ?= 4.2.8p18
 
 BUILD_DIR ?= /build
-ORIG_DIR ?= $(CURDIR)/packaging/output
-OUTPUT_DIR ?= $(CURDIR)/packaging/output/$(DEBIAN_RELEASE)
+ORIG_DIR ?= $(CURDIR)/../packaging/output
+OUTPUT_DIR ?= $(CURDIR)/../packaging/output/$(DEBIAN_RELEASE)
 BUILD_CONTAINER ?= deb-build
 DOCKERFILE ?= packaging.Dockerfile
 
@@ -19,7 +19,7 @@ buildcontainer:
 
 build:	buildcontainer
 	mkdir -p $(ORIG_DIR) $(OUTPUT_DIR)
-	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian' ':!.github' ':!.opencode'
+	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian' ':!.github'
 	docker run --rm -ti \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
 		-v $(CURDIR):$(BUILD_DIR)/ntp \
