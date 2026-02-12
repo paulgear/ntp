@@ -13,21 +13,18 @@ Instructions for creating Debian packages for NTP on Debian bookworm (12) and tr
 ### Build for Debian Bookworm
 
 ```bash
-cd docker
-make build RELEASE=bookworm
+make -f packaging.mk build RELEASE=bookworm
 ```
 
 ### Build for Debian Trixie
 
 ```bash
-cd docker
-make build RELEASE=trixie
+make -f packaging.mk build RELEASE=trixie
 ```
 
 ### Test Installation
 
 ```bash
-cd docker
 make test RELEASE=bookworm
 make test RELEASE=trixie
 ```
@@ -35,7 +32,6 @@ make test RELEASE=trixie
 ### Clean Build Artifacts
 
 ```bash
-cd docker
 make clean RELEASE=bookworm
 make clean RELEASE=trixie
 ```
