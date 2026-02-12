@@ -19,7 +19,7 @@ buildcontainer:
 
 build:	buildcontainer
 	mkdir -p $(ORIG_DIR) $(OUTPUT_DIR)
-	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian' ':!.github'
+	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian'
 	docker run --rm -ti \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
 		-v $(CURDIR):$(BUILD_DIR)/ntp \
