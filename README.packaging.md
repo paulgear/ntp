@@ -1,11 +1,11 @@
 # NTP Debian Package Build System
 
-This directory contains the build system for creating Debian packages for NTP on Debian bookworm (12) and trixie (13).
+Instructions for creating Debian packages for NTP on Debian bookworm (12) and trixie (13).
 
 ## Structure
 
-- `Dockerfile.build` - Dockerfile for building NTP in clean Debian containers
-- `Makefile` - Build commands for building and testing packages
+- `packaging.Dockerfile` - Dockerfile for building NTP in clean Debian containers
+- `packaging.mk` - Build commands for building and testing packages
 - `build-results/` - Directory where .deb files are copied (created on first build)
 
 ## Quick Start
