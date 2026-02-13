@@ -26,10 +26,13 @@ build:	clean buildcontainer
 		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz:ro \
 		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz:ro \
 		$(BUILD_CONTAINER) \
-		bash -c "cd $(BUILD_DIR)/ntp && \
+		bash -c " \
+			mkdir $(BUILD_DIR)/ntp && \
+			cd $(BUILD_DIR)/ntp && \
 			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
 			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz && \
-			dpkg-buildpackage -us -uc"
+			dpkg-buildpackage -us -uc \
+			"
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
 
