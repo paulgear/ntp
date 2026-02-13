@@ -16,7 +16,7 @@ buildcontainer:
 		-t $(BUILD_CONTAINER):$(DEBIAN_RELEASE) \
 		.
 
-build:	clean buildcontainer
+build:	buildcontainer
 	mkdir -p $(OUTPUT_DIR)/ntp
 	git archive --output=$(OUTPUT_DIR)/ntp_$(VERSION).orig.tar.gz HEAD -- ':!debian'
 	cp -a debian $(OUTPUT_DIR)/ntp/
