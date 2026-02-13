@@ -4,3 +4,4 @@ libedit.patch
 debian-locfile.patch
 sntp-kod-location.patch
 fix-pthread-detach-gcc14.patch
+fix-md5update-gcc14.patch
