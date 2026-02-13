@@ -12,6 +12,7 @@ Build-Depends: autogen,
                libevent-dev,
                libopts25-dev,
                libssl-dev,
+               lynx,
                pkg-config,
                pps-tools [linux-any]
 Build-Conflicts: libavahi-compat-libdnssd-dev, libwww-dev, libwww-ssl-dev
