@@ -13,7 +13,7 @@ buildcontainer:
 		-f $(DOCKERFILE) \
 		--build-arg BUILD_DIR=$(BUILD_DIR) \
 		--build-arg RELEASE=$(DEBIAN_RELEASE) \
-		-t $(BUILD_CONTAINER) \
+		-t $(BUILD_CONTAINER):$(DEBIAN_RELEASE) \
 		.
 
 build:	clean buildcontainer
@@ -23,7 +23,7 @@ build:	clean buildcontainer
 	docker run --rm \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
 		-v $(OUTPUT_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz:ro \
-		$(BUILD_CONTAINER) \
+		$(BUILD_CONTAINER):$(DEBIAN_RELEASE) \
 		bash -c " \
 			cd $(BUILD_DIR)/ntp && \
 			tar -xf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
