@@ -4,7 +4,6 @@ DEBIAN_RELEASE ?= bookworm
 VERSION ?= 4.2.8p18+dfsg
 
 BUILD_DIR ?= /build
-ORIG_DIR ?= $(CURDIR)/../packaging/output
 OUTPUT_DIR ?= $(CURDIR)/../packaging/output/$(DEBIAN_RELEASE)
 BUILD_CONTAINER ?= deb-build
 DOCKERFILE ?= packaging.Dockerfile
@@ -18,19 +17,16 @@ buildcontainer:
 		.
 
 build:	clean buildcontainer
-	mkdir -p $(ORIG_DIR) $(OUTPUT_DIR)
-	git archive --output=$(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz HEAD -- ':!debian'
-	tar -cJvf $(ORIG_DIR)/ntp_$(VERSION).debian.tar.xz debian/
+	mkdir -p $(OUTPUT_DIR)/ntp
+	git archive --output=$(OUTPUT_DIR)/ntp_$(VERSION).orig.tar.gz HEAD -- ':!debian'
+	cp -a debian $(OUTPUT_DIR)/ntp/
 	docker run --rm \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
-		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz:ro \
-		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz:ro \
+		-v $(OUTPUT_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz:ro \
 		$(BUILD_CONTAINER) \
 		bash -c " \
-			mkdir $(BUILD_DIR)/ntp && \
 			cd $(BUILD_DIR)/ntp && \
-			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
-			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz && \
+			tar -xf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
 			dpkg-buildpackage -us -uc \
 			"
 
