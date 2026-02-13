@@ -27,7 +27,7 @@ build:	buildcontainer
 		bash -c " \
 			cd $(BUILD_DIR)/ntp && \
 			tar -xf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
-			dpkg-buildpackage -us -uc \
+			DEB_BUILD_OPTIONS=noautodbgsym dpkg-buildpackage -us -uc \
 			"
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
