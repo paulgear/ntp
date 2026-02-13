@@ -25,7 +25,7 @@ build:	clean buildcontainer
 		-v $(CURDIR)/debian:$(BUILD_DIR)/ntp/debian:ro \
 		-v $(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:ro \
 		$(BUILD_CONTAINER) \
-		bash -c "cd $(BUILD_DIR)/ntp && dpkg-buildpackage -us -uc"
+		bash -c "cd $(BUILD_DIR)/ntp && tar -xvf $(BUILD_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz && dpkg-buildpackage -us -uc"
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
 
