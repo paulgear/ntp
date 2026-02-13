@@ -1,7 +1,7 @@
 .PHONY: build test clean
 
 DEBIAN_RELEASE ?= bookworm
-VERSION ?= 4.2.8p18
+VERSION ?= 4.2.8p18+dfsg
 
 BUILD_DIR ?= /build
 ORIG_DIR ?= $(CURDIR)/../packaging/output
@@ -19,13 +19,17 @@ buildcontainer:
 
 build:	clean buildcontainer
 	mkdir -p $(ORIG_DIR) $(OUTPUT_DIR)
-	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian'
+	git archive --output=$(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz HEAD -- ':!debian'
+	tar -cJvf $(ORIG_DIR)/ntp_$(VERSION).debian.tar.xz debian/
 	docker run --rm \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
-		-v $(CURDIR)/debian:$(BUILD_DIR)/ntp/debian \
-		-v $(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:ro \
+		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz:ro \
+		-v $(ORIG_DIR)/ntp_$(VERSION).orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz:ro \
 		$(BUILD_CONTAINER) \
-		bash -c "cd $(BUILD_DIR)/ntp && tar -xvf $(BUILD_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz && dpkg-buildpackage -us -uc"
+		bash -c "cd $(BUILD_DIR)/ntp && \
+			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).orig.tar.gz && \
+			tar -xvf $(BUILD_DIR)/ntp_$(VERSION).debian.tar.xz && \
+			dpkg-buildpackage -us -uc"
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
 
