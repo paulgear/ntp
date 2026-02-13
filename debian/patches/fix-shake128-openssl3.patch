@@ -2,7 +2,8 @@ Description: Fix SHAKE128 support for OpenSSL 3.x
  SHAKE128 is an XOF (extendable-output function) and requires
  EVP_DigestFinalXOF instead of EVP_DigestFinal in OpenSSL 3.x.
  This patch adds detection for XOF functions and uses the appropriate
- finalization function.
+ finalization function. Also fixes make_mac to pass the requested
+ digest size to compute_mac for proper XOF output length.
 Author: Paul Gear
 Bug-Debian: https://bugs.debian.org/XXXXXX
 Forwarded: no
@@ -29,3 +30,12 @@ Last-Update: 2025-02-13
  			msyslog(LOG_ERR, "make_mac: MAC %s Digest Final failed.",
  				macname);
  			len = 0;
+@@ -139,7 +149,7 @@ make_mac(
+ 	if (cmp_key->key_len > 64 || pkt_len % 4 != 0) {
+ 		return 0;
+ 	}
+-	len = compute_mac(dbuf, sizeof(dbuf),  cmp_key->typen, pkt_data,
++	len = compute_mac(dbuf, dig_sz,  cmp_key->typen, pkt_data,
+ 			  pkt_len, cmp_key->key_seq, cmp_key->key_len);
+ 	INSIST(len <= dig_sz);
+ 	memcpy(digest, dbuf, len);
