@@ -35,6 +35,7 @@ endif
 		--enable-ntp-signd \
 		--disable-dependency-tracking \
 		--with-locfile=debian \
+		--with-openssl-incdir=/usr/include/$(DEB_HOST_MULTIARCH) \
 		--with-openssl-libdir=/usr/lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_install:
