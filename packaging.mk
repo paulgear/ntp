@@ -37,4 +37,4 @@ test:	build
 		bash -c "apt-get update && apt-get install -y /output/*.deb && dpkg -l | grep ntp"
 
 clean:
-	rm -rf $(OUTPUT_DIR)
+	sudo rm -rf $(OUTPUT_DIR)
