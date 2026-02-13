@@ -29,7 +29,7 @@ build:	clean buildcontainer
 
 # To sign: add devscripts package and use debsign, or add -k <keyid> to dpkg-buildpackage
 
-test:	build
+test:
 	@echo "Installing built package in clean $(DEBIAN_RELEASE) container..."
 	docker run --rm \
 		-v $(OUTPUT_DIR):/output:ro \
