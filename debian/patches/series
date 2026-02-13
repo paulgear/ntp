@@ -3,3 +3,4 @@ includes.patch
 libedit.patch
 debian-locfile.patch
 sntp-kod-location.patch
+fix-pthread-detach-gcc14.patch

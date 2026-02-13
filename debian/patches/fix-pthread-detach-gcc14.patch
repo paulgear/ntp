@@ -1,0 +1,25 @@
+Description: Fix pthread_detach() detection with GCC 14
+ The configure test for pthread_detach() fails with GCC 14 due to stricter
+ type checking. The test was calling pthread_detach(NULL) where NULL is a
+ void pointer, but pthread_detach() expects a pthread_t (unsigned long int).
+ This patch changes the test to use a proper pthread_t variable.
+Author: Yegor Yefremov <yegorslists@googlemail.com>
+Bug: https://bugs.ntp.org/show_bug.cgi?id=3926
+Origin: https://git.buildroot.net/buildroot/commit/?id=40d0797027a610a3afcb8c2703210298a52f60f5
+Last-Update: 2024-06-03
+
+--- a/sntp/m4/openldap-thread-check.m4
++++ b/sntp/m4/openldap-thread-check.m4
+@@ -262,10 +262,8 @@ pthread_rwlock_t rwlock;
+ 			dnl save the flags
+ 			AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+ #include <pthread.h>
+-#ifndef NULL
+-#define NULL (void*)0
+-#endif
+-]], [[pthread_detach(NULL);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
++pthread_t thread;
++]], [[pthread_detach(thread);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
+ 		])
+ 
+ 		if test $ol_cv_func_pthread_detach = no ; then
