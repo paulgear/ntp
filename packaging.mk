@@ -17,12 +17,12 @@ buildcontainer:
 		-t $(BUILD_CONTAINER) \
 		.
 
-build:	buildcontainer
+build:	clean buildcontainer
 	mkdir -p $(ORIG_DIR) $(OUTPUT_DIR)
 	git archive --output=$(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz HEAD -- ':!debian'
 	docker run --rm \
 		-v $(OUTPUT_DIR):$(BUILD_DIR) \
-		-v $(CURDIR):$(BUILD_DIR)/ntp \
+		-v $(CURDIR)/debian:$(BUILD_DIR)/ntp/debian:ro \
 		-v $(ORIG_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:$(BUILD_DIR)/ntp_$(VERSION)+dfsg.orig.tar.gz:ro \
 		$(BUILD_CONTAINER) \
 		bash -c "cd $(BUILD_DIR)/ntp && dpkg-buildpackage -us -uc"
