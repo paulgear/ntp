@@ -6,34 +6,34 @@ Instructions for creating Debian packages for NTP on Debian bookworm (12) and tr
 
 - `packaging.Dockerfile` - Dockerfile for building NTP in clean Debian containers
 - `packaging.mk` - Build commands for building and testing packages
-- `build-results/` - Directory where .deb files are copied (created on first build)
+- `../packaging/output` - Directory where .deb files are copied (created on first build)
 
 ## Quick Start
 
 ### Build for Debian Bookworm
 
 ```bash
-make -f packaging.mk build RELEASE=bookworm
+make -f packaging.mk build DEBIAN_RELEASE=bookworm
 ```
 
 ### Build for Debian Trixie
 
 ```bash
-make -f packaging.mk build RELEASE=trixie
+make -f packaging.mk build DEBIAN_RELEASE=trixie
 ```
 
 ### Test Installation
 
 ```bash
-make test RELEASE=bookworm
-make test RELEASE=trixie
+make -f packaging.mk test DEBIAN_RELEASE=bookworm
+make -f packaging.mk test DEBIAN_RELEASE=trixie
 ```
 
 ### Clean Build Artifacts
 
 ```bash
-make clean RELEASE=bookworm
-make clean RELEASE=trixie
+make -f packaging.mk clean DEBIAN_RELEASE=bookworm
+make -f packaging.mk clean DEBIAN_RELEASE=trixie
 ```
 
 ## Usage
@@ -44,15 +44,13 @@ The `make build` command:
 1. Builds a Docker image with the specified Debian release
 2. Installs all build dependencies
 3. Runs `dpkg-buildpackage` to build the NTP package
-4. Copies all .deb files to `build-results/` on the host
 
 ### Test Installation
 
 The `make test` command:
-1. Builds the package (if not already built)
-2. Runs a fresh Debian container
-3. Installs the built .deb package
-4. Verifies installation with `dpkg -l`
+1. Runs a fresh Debian container
+2. Installs the built .deb package
+3. Verifies installation with `dpkg -l`
 
 ### GitHub Actions
 
