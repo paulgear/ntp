@@ -10,7 +10,7 @@ Last-Update: 2025-02-13
 
 --- a/ntpd/ntp_control.c
 +++ b/ntpd/ntp_control.c
-@@ -3664,14 +3664,14 @@ static u_int32 derive_nonce(
+@@ -3664,16 +3664,16 @@ static u_int32 derive_nonce(
  	}
  
  	MD5Init(&ctx);
@@ -32,3 +32,5 @@ Last-Update: 2025-02-13
 +	MD5Update(&ctx, (const uint8_t *)&NSRCPORT(addr), sizeof(NSRCPORT(addr)));
 +	MD5Update(&ctx, (const uint8_t *)salt, sizeof(salt));
  	MD5Final(d.digest, &ctx);
+ 
+ 	return d.extract;
