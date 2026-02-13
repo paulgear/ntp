@@ -2,8 +2,14 @@ Description: Fix SHAKE128 support for OpenSSL 3.x
  SHAKE128 is an XOF (extendable-output function) and requires
  EVP_DigestFinalXOF instead of EVP_DigestFinal in OpenSSL 3.x.
  This patch adds detection for XOF functions and uses the appropriate
- finalization function. Also fixes make_mac and auth_md5 to pass the
- requested digest size to compute_mac for proper XOF output length.
+ finalization function.
+ .
+ Additionally, fixes make_mac and auth_md5 to pass the correct digest
+ size to compute_mac. For XOF functions like SHAKE128, the output length
+ must be specified. The make_mac function now queries the actual digest
+ length for the key type and uses the minimum of that and the requested
+ buffer size, ensuring SHAKE128 produces exactly 16 bytes as defined by
+ SHAKE128_LENGTH, not the maximum buffer size.
 Author: Paul Gear
 Bug-Debian: https://bugs.debian.org/XXXXXX
 Forwarded: no
@@ -30,11 +36,23 @@ Last-Update: 2025-02-13
  			msyslog(LOG_ERR, "make_mac: MAC %s Digest Final failed.",
  				macname);
  			len = 0;
-@@ -139,7 +149,7 @@ make_mac(
+@@ -135,11 +145,19 @@ make_mac(
+ {
+ 	u_int		len;
+ 	u_char		dbuf[EVP_MAX_MD_SIZE];
++	size_t		actual_dig_sz;
+ 
  	if (cmp_key->key_len > 64 || pkt_len % 4 != 0) {
  		return 0;
  	}
 -	len = compute_mac(dbuf, sizeof(dbuf),  cmp_key->typen, pkt_data,
++	/* Get the actual digest length for this key type */
++	actual_dig_sz = dig_sz;
++	keytype_from_text(cmp_key->typen, &actual_dig_sz);
++	/* Use the smaller of the requested size and actual digest size */
++	if (actual_dig_sz < dig_sz) {
++		dig_sz = actual_dig_sz;
++	}
 +	len = compute_mac(dbuf, dig_sz,  cmp_key->typen, pkt_data,
  			  pkt_len, cmp_key->key_seq, cmp_key->key_len);
  	INSIST(len <= dig_sz);
