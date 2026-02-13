@@ -10,9 +10,9 @@ Last-Update: 2024-06-03
 
 --- a/sntp/m4/openldap-thread-check.m4
 +++ b/sntp/m4/openldap-thread-check.m4
-@@ -263,10 +263,8 @@
- 			dnl save the flags
- 			AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+@@ -262,10 +262,8 @@
+ 				dnl save the flags
+ 				AC_LINK_IFELSE([AC_LANG_PROGRAM([[
  #include <pthread.h>
 -#ifndef NULL
 -#define NULL (void*)0
@@ -20,6 +20,6 @@ Last-Update: 2024-06-03
 -]], [[pthread_detach(NULL);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
 +pthread_t thread;
 +]], [[pthread_detach(thread);]])],[ol_cv_func_pthread_detach=yes],[ol_cv_func_pthread_detach=no])
- 		])
+ 			])
  
- 		if test $ol_cv_func_pthread_detach = no ; then
+ 			if test $ol_cv_func_pthread_detach = no ; then
