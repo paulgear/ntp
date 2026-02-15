@@ -3,58 +3,41 @@ name: Build NTP for Debian
 on:
   push:
     branches: [stable]
+    tags: ['v*']
   pull_request:
     branches: [stable]
 
 jobs:
-  build-bookworm:
+  build-and-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        release: [bullseye, bookworm, trixie]
     steps:
-    - uses: actions/checkout@v3
-    - name: Build for Debian Bookworm
-      run: make build RELEASE=bookworm
+    - uses: actions/checkout@v4
+    - name: Build for Debian ${{ matrix.release }}
+      run: make -f packaging.mk build DEBIAN_RELEASE=${{ matrix.release }} OUTPUT_DIR=${{ github.workspace }}/packaging/output/${{ matrix.release }}
+    - name: Test installation on ${{ matrix.release }}
+      run: make -f packaging.mk test DEBIAN_RELEASE=${{ matrix.release }} OUTPUT_DIR=${{ github.workspace }}/packaging/output/${{ matrix.release }}
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: ntp-bookworm
-        path: docker/build-results/*.deb
-        retention-days: 7
+        name: ntp-${{ matrix.release }}
+        path: packaging/output/${{ matrix.release }}/*.deb
+        retention-days: 3
 
-  build-trixie:
+  release:
     runs-on: ubuntu-latest
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
     steps:
-    - uses: actions/checkout@v3
-    - name: Build for Debian Trixie
-      run: make build RELEASE=trixie
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
-        name: ntp-trixie
-        path: docker/build-results/*.deb
-        retention-days: 7
-
-  test-bookworm:
-    runs-on: ubuntu-latest
-    needs: build-bookworm
-    steps:
-    - uses: actions/checkout@v3
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
+        pattern: ntp-*
+        merge-multiple: true
+    - name: Upload to GitHub Release
+      uses: softprops/action-gh-release@v2
       with:
-        name: ntp-bookworm
-        path: docker/build-results
-    - name: Test installation in Bookworm
-      run: make test RELEASE=bookworm
-
-  test-trixie:
-    runs-on: ubuntu-latest
-    needs: build-trixie
-    steps:
-    - uses: actions/checkout@v3
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: ntp-trixie
-        path: docker/build-results
-    - name: Test installation in Trixie
-      run: make test RELEASE=trixie
+        files: '*.deb'
