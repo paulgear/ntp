@@ -8,6 +8,12 @@ OUTPUT_DIR ?= $(CURDIR)/../packaging/output/$(DEBIAN_RELEASE)
 BUILD_CONTAINER ?= deb-build
 DOCKERFILE ?= packaging.Dockerfile
 
+what:
+	@echo "What would you like to make today?"
+	@echo "Options: buildcontainer build test clean all"
+
+all:	clean buildcontainer build test
+
 buildcontainer:
 	docker build \
 		-f $(DOCKERFILE) \
