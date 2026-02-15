@@ -47,3 +47,6 @@ test:
 
 clean:
 	sudo rm -rf $(OUTPUT_DIR)
+
+dockerclean:
+	docker image rm $(BUILD_CONTAINER):$(DEBIAN_RELEASE)
