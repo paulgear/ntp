@@ -1,0 +1,26 @@
+Description: Fix generate_pkt to use actual digest length for key type
+ The generate_pkt function was passing MAX_MDG_LEN (20 bytes) to make_mac
+ for all digest types, but SHAKE128 should only generate 16 bytes. This
+ patch gets the actual digest length from keytype_from_text and uses that
+ instead of the maximum.
+Author: Paul Gear
+Bug-Debian: https://bugs.debian.org/XXXXXX
+Forwarded: no
+Last-Update: 2025-02-13
+
+--- a/sntp/main.c
++++ b/sntp/main.c
+@@ -1143,9 +1143,12 @@ generate_pkt (
+ 		printf("generate_pkt: key_id %d, key pointer %p\n", key_id, pkt_key);
+ 	}
+ 	if (pkt_key != NULL) {
++		size_t digest_len = MAX_MDG_LEN;
++		/* Get the actual digest length for this key type */
++		keytype_from_text(pkt_key->typen, &digest_len);
+ 		x_pkt->exten[0] = htonl(key_id);
+ 		mac_size = make_mac(x_pkt, pkt_len, pkt_key,
+-				    (char *)&x_pkt->exten[1], MAX_MDG_LEN);
++				    (char *)&x_pkt->exten[1], digest_len);
+ 		if (mac_size > 0)
+ 			pkt_len += mac_size + KEY_MAC_LEN;
+ #ifdef DEBUG

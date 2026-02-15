@@ -1,0 +1,9 @@
+dfsg.patch
+includes.patch
+libedit.patch
+debian-locfile.patch
+sntp-kod-location.patch
+fix-pthread-detach-gcc14.patch
+fix-md5update-gcc14.patch
+fix-shake128-openssl3.patch
+fix-generate-pkt-digest-len.patch
