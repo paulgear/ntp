@@ -1,7 +1,7 @@
 .PHONY: build test clean
 
 DEBIAN_RELEASE ?= bookworm
-VERSION ?= 4.2.8p18+dfsg
+VERSION ?= $(shell dpkg-parsechangelog -S Version | sed -e 's/^[0-9]://; s/-[0-9]*$$//;')
 
 BUILD_DIR ?= /build
 OUTPUT_DIR ?= $(CURDIR)/../packaging/output/$(DEBIAN_RELEASE)
