@@ -1,0 +1,18 @@
+Description: Fix IPv6-only pools
+ The fix for ntpd bug #3815 broke IPv6-only pools.
+Author: Paul Gear
+Last-Update: 2026-02-16
+
+diff --git a/ntpd/ntp_proto.c b/ntpd/ntp_proto.c
+index 2e0d221c8..170294c68 100644
+--- a/ntpd/ntp_proto.c
++++ b/ntpd/ntp_proto.c
+@@ -474,7 +474,7 @@ transmit(
+ 	/* [Bug 3851] drop pool servers which can no longer be reached. */
+ 	if (MDF_PCLNT & peer->cast_flags) {
+ 		if (   (IS_IPV6(&peer->srcadr) && !nonlocal_v6_addr_up)
+-		    || !nonlocal_v4_addr_up) {
++		    || (IS_IPV4(&peer->srcadr) && !nonlocal_v4_addr_up)) {
+ 			unpeer(peer);
+ 			return;
+ 		}
